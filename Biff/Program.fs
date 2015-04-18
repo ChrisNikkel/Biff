@@ -18,11 +18,14 @@ type LineChartForm(title, xs : float seq) =
     do chart.ChartAreas.Add(area)
     do base.Controls.Add(chart)
 
+
 [<EntryPoint>]
 let main argv = 
-    let data = seq { for i in 1..1000 do yield float i }
-    let f = new LineChartForm("Sine", data)
-    System.Windows.Forms.Application.Run(f)
+    let f_biff x r = r * (1.0 - 2.0 * x) 
+    let f_sine x = sin(x / 100.0)
+    let data = seq { for i in 1..1000 do yield f_sine (float i) }
+    let form = new LineChartForm("Sine", data)
+    System.Windows.Forms.Application.Run(form)
 
     printfn "%A" argv
     0 // return an integer exit code
