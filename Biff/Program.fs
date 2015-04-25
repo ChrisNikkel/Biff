@@ -24,23 +24,23 @@ type LineChartForm(title, xs : float seq) =
 let main argv = 
     let f_sine x = sin(x / 100.0)
 
-    let f_biff x c = c * (1.0 - 2.0 * x)
+    let f_biff x rate = rate * (1.0 - 2.0 * x)
 
-    let rec iterate x c i f = 
-        if i > 1 then
-            let y = f x c
-            let result = iterate y c (i - 1) f
+    let rec iterate x rate iteration func = 
+        if iteration > 1 then
+            let fx = func x rate
+            let result = iterate fx rate (iteration - 1) func
             result
         else
-            f x c
+            func x rate
 
     printfn "%A" (iterate 2.1 2.0 2 f_biff)
 
-    let rec iterateCapture x c i f = 
-        if i > 0 then
-            let y = f x c
-            let result = iterateCapture y c (i - 1) f
-            y :: result
+    let rec iterateCapture x rate iteration func = 
+        if iteration > 0 then
+            let fx = func x rate
+            let result = iterateCapture fx rate (iteration - 1) func
+            fx :: result
         else
             []
 
