@@ -28,8 +28,8 @@ let main argv =
             []
 
     let x = 0.5
-    let iterations = 200
-    let samples = 20
+    let iterations = 2000
+    let samples = 100
 
     let data = 
         seq {2.5 .. 0.001 .. 4.0 } 
