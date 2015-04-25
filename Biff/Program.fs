@@ -24,27 +24,27 @@ type LineChartForm(title, xs : float seq) =
 let main argv = 
     let f_sine x = sin(x / 100.0)
 
-    let f_biff x = 2.4 * (1.0 - 2.0 * x)
+    let f_biff x c = c * (1.0 - 2.0 * x)
 
-    let rec iterate x i = 
+    let rec iterate x c i = 
         if i > 1 then
-            let y = f_biff x
-            let result = iterate y (i - 1)
+            let y = f_biff x c
+            let result = iterate y c (i - 1)
             result
         else
-            f_biff x
+            f_biff x c
 
-    printfn "%A" (iterate 2.1 2)
+    printfn "%A" (iterate 2.1 2.0 2)
 
-    let rec iterateCapture x i = 
+    let rec iterateCapture x c i = 
         if i > 1 then
-            let y = f_biff x
-            let result = iterateCapture y (i - 1)
+            let y = f_biff x c
+            let result = iterateCapture y c (i - 1)
             y :: result
         else
             []
 
-    printfn "%A" (iterateCapture (iterate 2.1 2) 10)
+    printfn "%A" (iterateCapture (iterate 2.1 2.0 2) 2.0 10)
 
     let data = seq { for i in 1..1000 -> f_sine (float i) }
 
