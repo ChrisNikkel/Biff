@@ -38,7 +38,7 @@ let main argv =
             |> List.map (fun fx -> (rate, fx))) 
         |> List.concat
 
-    let chart = (data |> Chart.FastPoint)
+    let chart = data |> Chart.FastPoint
     let form = chart.ShowChart()
 
     System.Windows.Forms.Application.Run(form)
