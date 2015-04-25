@@ -8,7 +8,6 @@ open FSharp.Collections.ParallelSeq
 
 [<EntryPoint>]
 let main argv = 
-    let f_sine x = sin(x / 100.0)
 
     let f_biff x rate = rate * x * (1.0 - x)
 
