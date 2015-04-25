@@ -49,6 +49,6 @@ let main argv =
     let data = seq { for i in 1..1000 -> f_sine (float i) }
 
     let form = new LineChartForm("Sine", data)
-    printfn "%A" data2
+    
     System.Windows.Forms.Application.Run(form)
     0 // return an integer exit code
