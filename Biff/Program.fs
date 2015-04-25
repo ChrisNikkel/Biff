@@ -1,5 +1,4 @@
-﻿// Learn more about F# at http://fsharp.net
-// See the 'F# Tutorial' project for more help.
+﻿// Copyright (c)  2015 Christopher Nikkel
 
 open FSharp.Charting
 open System
