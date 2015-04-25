@@ -37,7 +37,7 @@ let main argv =
     printfn "%A" (iterate 2.1 2.0 2)
 
     let rec iterateCapture x c i = 
-        if i > 1 then
+        if i > 0 then
             let y = f_biff x c
             let result = iterateCapture y c (i - 1)
             y :: result
