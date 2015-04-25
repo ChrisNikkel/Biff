@@ -4,6 +4,7 @@
 open FSharp.Charting
 open System
 open System.Drawing
+open FSharp.Collections.ParallelSeq
 
 [<EntryPoint>]
 let main argv = 
@@ -28,13 +29,16 @@ let main argv =
             []
 
     let x = 0.5
-    let iterations = 2
+    let iterations = 200
     let samples = 20
-    let distributey d = List.map (fun b -> (fst d, b)) (snd d) 
-    let data = [for rate in 3.0 .. 0.01 .. 4.0 -> rate, (iterateCapture (iterate x rate iterations f_biff) rate samples f_biff)]
-    let datapairs = List.concat (List.map (fun a -> distributey a) data)
-    let myForm = (datapairs |> Chart.Point).ShowChart()
 
-    System.Windows.Forms.Application.Run(myForm)
+    let distributey d = List.map (fun b -> (fst d, b)) (snd d) 
+    let data = seq {2.5 .. 0.001 .. 4.0 } |> PSeq.map (fun rate -> (rate, (iterateCapture (iterate x rate iterations f_biff) rate samples f_biff)))
+    let datapairs = List.concat (Seq.map (fun a -> distributey a) data)
+
+    let chart = (datapairs |> Chart.FastPoint)
+    let form = chart.ShowChart()
+
+    System.Windows.Forms.Application.Run(form)
 
     0 // return an integer exit code
