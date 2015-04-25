@@ -34,7 +34,7 @@ let main argv =
 
     let distributey d = List.map (fun b -> (fst d, b)) (snd d) 
     let data = seq {2.5 .. 0.001 .. 4.0 } |> PSeq.map (fun rate -> (rate, (iterateCapture (iterate x rate iterations f_biff) rate samples f_biff)))
-    let datapairs = List.concat (Seq.map (fun a -> distributey a) data)
+    let datapairs = List.concat (PSeq.map (fun a -> distributey a) data)
 
     let chart = (datapairs |> Chart.FastPoint)
     let form = chart.ShowChart()
