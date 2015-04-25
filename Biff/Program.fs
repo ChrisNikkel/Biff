@@ -9,7 +9,7 @@ open System.Drawing
 let main argv = 
     let f_sine x = sin(x / 100.0)
 
-    let f_biff x rate = rate * (1.0 - 2.0 * x)
+    let f_biff x rate = rate * x * (1.0 - x)
 
     let rec iterate x rate iteration func = 
         if iteration > 1 then
@@ -27,9 +27,11 @@ let main argv =
         else
             []
 
-    let rate = 3.83
+    let x = 0.5
+    let iterations = 2
+    let samples = 20
     let distributey d = List.map (fun b -> (fst d, b)) (snd d) 
-    let data = [for x in 1.0 .. 1.0 .. 10.0 -> x, (iterateCapture (iterate x rate 2 f_biff) rate 20 f_biff)]
+    let data = [for rate in 3.0 .. 0.01 .. 4.0 -> rate, (iterateCapture (iterate x rate iterations f_biff) rate samples f_biff)]
     let datapairs = List.concat (List.map (fun a -> distributey a) data)
     let myForm = (datapairs |> Chart.Point).ShowChart()
 
