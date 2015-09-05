@@ -35,24 +35,24 @@ let main argv =
         |> List.map (fun fx -> (rate, fx)) 
 
     let minX = 2.9;
-    let maxX = 4.0;
-    let minY = 0.3;
+    let maxX = 3.9;
+    let minY = 0.5;
     let maxY = 1.0;
     let x = 0.5
     let iterations = 1000
     let samples = 500
-    let resolution = 0.005
+    let resolution = 0.0044
 
     let createTimer interval =
         let timer = new System.Windows.Forms.Timer(Interval = int(interval * 1000.0), Enabled = true)
         timer.Start()
-        timer.Tick
+        (timer.Tick, timer.Stop)
 
-    let events = createTimer 0.05
-
+    let (events, stopTimer) = createTimer 0.05
+    
     let eventStream = 
         events 
-        |> Observable.scan(fun rate _ -> rate + resolution) minX 
+        |> Observable.scan(fun rate _ -> (if rate >= maxX then stopTimer()); rate + resolution) minX 
         |> Observable.map(fun rate -> calcBiff x rate iterations samples resolution f_biff)
         |> Observable.scan(fun data source -> data |> List.append source) List.Empty
 
